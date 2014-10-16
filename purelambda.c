@@ -3,21 +3,24 @@
 #include "purelambda.h"
 
 
+
 void print_lambda_term(tagged_term_t* t){
   assert(NULL != t);
 
 
-  printf("(");
   switch(t->tag){
     case var:
+      printf("(");
       print_variable(t->term.variable);
       printf(")");
       break;
     case abst:
+      printf("(");
       print_abstraction(t->term.Lx_t);
       printf(")");
       break;
     case app:
+      printf("(");
       print_application(t->term.t1_t2);
       printf(")");
       break;
@@ -43,5 +46,5 @@ void print_application(application_t t1_t2){
 
 
 void print_variable(variable_t x){
-  printf("x%d",x.debrujin);
+  printf("%s",x.name);
 }

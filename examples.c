@@ -7,7 +7,7 @@ tagged_term_t lambda_identity(){
 
   tagged_term_t tmp = 
   {
-    .term = {.variable={.debrujin=1}},
+    .term = {.variable={.name="x"}},
     .tag  = var
   };
 
@@ -18,7 +18,7 @@ tagged_term_t lambda_identity(){
 
   tagged_term_t out = 
   {
-    .term = {.Lx_t = {.x={.debrujin=1}, .t = (struct tagged_term_t*)term}},
+    .term = {.Lx_t = {.x={.name="x"}, .t = (struct tagged_term_t*)term}},
 
     .tag = abst
   };

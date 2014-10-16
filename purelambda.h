@@ -10,7 +10,7 @@ typedef enum{
 
 
 typedef struct{
-  int debrujin;
+  char name[256];
 }variable_t;
 
 typedef struct{
