@@ -1,5 +1,5 @@
 CC := clang
-CFLAGS := -c -g
+CFLAGS := -c -g -Wall -pedantic
 
 
 
