@@ -51,7 +51,9 @@ tagged_term_t* redex_reduce(tagged_term_t* tin){
   /*This is essentially a deeper pattern match.*/
   /*In this case we pattern match on a term of form: "(\substvar -> tout) t2" */
   variable_t substvar = ((tagged_term_t*)tin->term.t1_t2.t1)->term.Lx_t.x;
-  tagged_term_t* tout = term_copy((tagged_term_t*)tin->term.t1_t2.t1);
+  tagged_term_t* tout = term_copy(
+      (tagged_term_t*)((tagged_term_t*)(tin->term.t1_t2.t1))->term.Lx_t.t
+      );
   tagged_term_t* t2   = term_copy((tagged_term_t*)tin->term.t1_t2.t2);
 
 
@@ -74,7 +76,8 @@ void term_var_subst(tagged_term_t* tout,tagged_term_t* t2,variable_t substvar){
     case var:
       /*If variable matches substvar, replace with term t2.*/
       if(var1_equals_var2(substvar,tout->term.variable)){
-        memcpy(tout,t2,sizeof(tagged_term_t));
+        tagged_term_t* tmp = term_copy(t2);
+        memcpy(tout,tmp,sizeof(tagged_term_t));
       }
       /*Else do nothing..*/
       break;
@@ -86,6 +89,7 @@ void term_var_subst(tagged_term_t* tout,tagged_term_t* t2,variable_t substvar){
       term_var_subst((tagged_term_t*)tout->term.t1_t2.t2,t2,substvar);
       break;
   }
+
 }
 
 bool var1_equals_var2(variable_t var1, variable_t var2){
@@ -116,8 +120,8 @@ tagged_term_t* term_copy(tagged_term_t* tin){
       tout->term.Lx_t.t = (struct tagged_term_t*)term_copy((tagged_term_t*)tin->term.Lx_t.t);
       break;
     case app:
-      tout->term.t1_t2.t1 = (struct tagged_term_t*)term_copy((tagged_term_t*)tin->term.Lx_t.t);
-      tout->term.t1_t2.t2 = (struct tagged_term_t*)term_copy((tagged_term_t*)tin->term.Lx_t.t);
+      tout->term.t1_t2.t1 = (struct tagged_term_t*)term_copy((tagged_term_t*)tin->term.t1_t2.t1);
+      tout->term.t1_t2.t2 = (struct tagged_term_t*)term_copy((tagged_term_t*)tin->term.t1_t2.t2);
       break;
   }
 

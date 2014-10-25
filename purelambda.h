@@ -48,6 +48,7 @@ void print_application(application_t t1_t2);
 void print_variable(variable_t x);
 
 
+tagged_term_t* normal_order_evaluation(tagged_term_t* tin);
 tagged_term_t* redex_reduce(tagged_term_t* t);
 void term_var_subst(tagged_term_t* tout,tagged_term_t* t2,variable_t substvar);
 bool var1_equals_var2(variable_t var1, variable_t var2);
